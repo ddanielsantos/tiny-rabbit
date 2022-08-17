@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsnd --transpile-only --respawn --exit-child --quiet index.ts",
+    "dev": "tsnd --transpile-only --respawn --exit-child --quiet src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -p .",
     "start": "node dist/src/index.js",
-    "create-load": "tsnd --transpile-only --quiet src/scripts/create-load.ts"
+    "create-raw": "tsnd --transpile-only --quiet src/scripts/create-raw.ts"
   },
   "keywords": [],
   "author": "",
