@@ -9,7 +9,6 @@ async function worker() {
   const conn = await amqplib.connect(config.RABBIT_URL)
 
   const consumer = await conn.createChannel()
-
   await consumer.assertQueue(queueToListen, { durable: true })
 
   consumer.consume(queueToListen, msg => {
@@ -18,13 +17,13 @@ async function worker() {
       return
     }
 
-    const messageContent = msg.content.toString()
+    const stringifiedMessage = msg.content.toString()
 
-    if(!messageContent) {
+    if(!stringifiedMessage) {
       return
     }
 
-    const load: Batch = JSON.parse(messageContent)
+    const load: Batch = JSON.parse(stringifiedMessage)
 
     const sum = load.lines.reduce((prev, curr) => {
       const currentLineSum = sumLine(curr)
@@ -38,12 +37,12 @@ async function worker() {
       totalLines: load.totalLines
     }
     
-    const stringifiedMessage = JSON.stringify(message)
-    console.log(stringifiedMessage)
+    const processedMessage = JSON.stringify(message)
+    console.log(processedMessage)
 
     const destinationQueue = 'aggregator'
     consumer.ack(msg)
-    consumer.sendToQueue(destinationQueue, Buffer.from(stringifiedMessage))
+    consumer.sendToQueue(destinationQueue, Buffer.from(processedMessage))
   })
   
 }
