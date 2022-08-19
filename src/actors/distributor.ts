@@ -12,17 +12,18 @@ async function distributor() {
   
   const directory = path.join(__dirname, '..', 'data')
   const lines = fileToLines(directory + '/raw')
+  
   const sender = await connection.createChannel()
-
   await sender.assertQueue(queueToSend, { durable: true })
 
   const bufferSize = 5
+  const id = crypto.randomUUID()
 
   for (let index = 0; index < lines.length; index += bufferSize) {
     const linesToSend = lines.slice(index, index + bufferSize)
 
     const batch: Batch = {
-      id: crypto.randomUUID(),
+      id,
       totalLines: lines.length,
       lines: linesToSend
     } 
