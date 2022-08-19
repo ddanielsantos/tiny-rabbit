@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsnd --transpile-only --respawn --exit-child --quiet src/index.ts",
+    "dev": "tsnd --transpile-only --clear --respawn --exit-child --quiet src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "actor:distributor": "tsnd --transpile-only --quiet src/actors/distributor.ts",
+    "actor:worker": "tsnd --clear --respawn  --transpile-only --exit-child --quiet src/actors/worker.ts",
     "build": "tsc -p .",
     "start": "node dist/src/index.js",
     "create-raw": "tsnd --transpile-only --quiet src/scripts/create-raw.ts"
